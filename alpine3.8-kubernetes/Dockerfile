@@ -1,4 +1,3 @@
-
 FROM alpine:3.8.4 AS build
 RUN mkdir -p /lib/apk/db /run
 RUN apk add --no-cache --initdb openrc
@@ -40,7 +39,7 @@ COPY --from=kernel /lib/modules /lib/modules
 RUN echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk add --update --no-cache --initdb alpine-baselayout apk-tools busybox ca-certificates util-linux \
-    openssh openssh-client rng-tools dhcpcd kubernetes
+    openssh openssh-client rng-tools dhcpcd kubernetes docker ebtables ethtool socat iproute2 etcd
 
 RUN rm -rf /var/cache/apk && mkdir -p /var/cache/apk
 
@@ -62,3 +61,10 @@ RUN sed -i 's/root:!/root:*/' /etc/shadow
 
 # Don't need floppy group
 RUN sed -i '/floppy:x:11:root/d' /etc/group
+
+# kubernetes settings
+COPY files/k8s/docker.initd /etc/init.d/docker
+COPY files/k8s/kubelet.initd /etc/init.d/kubelet
+
+COPY files/scripts/kube-init.sh /root/kube-init.sh
+COPY files/scripts/kubelet.sh /root/kubelet.sh

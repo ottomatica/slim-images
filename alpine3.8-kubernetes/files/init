@@ -17,6 +17,7 @@ rc_add sshd default
 rc_add dhcpcd default
 rc_add urandom default
 rc_add rngd default
+rc_add docker default
 
 #/sbin/openrc boot
 
