@@ -1,0 +1,22 @@
+#!/sbin/openrc-run
+# modified from https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-cluster/kubelet/files/kubelet.initd?id=2f0e00f22813902265b58ba37ad63daf0a1dc910
+
+description="Kubelet, a Kubernetes node agent"
+pidfile=${pidfile:-"/run/kubelet/kubelet.pid"}
+user=${user:-root}
+group=${group:-root}
+
+command="/usr/bin/kubelet"
+command_args="--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf \
+	--kubeconfig=/etc/kubernetes/kubelet.conf \
+	--config=/var/lib/kubelet/config.yaml \
+	--network-plugin=cni"
+command_background="true"
+start_stop_daemon_args="--user ${user} --group ${group} \
+	--stdout /var/log/kubelet/kubelet.log \
+	--stderr /var/log/kubelet/kubelet.log"
+
+depend() {
+	need net
+	after net
+}

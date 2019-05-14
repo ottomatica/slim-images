@@ -1,0 +1,38 @@
+#!/sbin/openrc-run
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+command="${DOCKERD_BINARY:-/usr/bin/dockerd}"
+pidfile="${DOCKER_PIDFILE:-/run/${RC_SVCNAME}.pid}"
+command_args="-p \"${pidfile}\" ${DOCKER_OPTS}"
+DOCKER_LOGFILE="${DOCKER_LOGFILE:-/var/log/${RC_SVCNAME}.log}"
+DOCKER_ERRFILE="${DOCKER_ERRFILE:-${DOCKER_LOGFILE}}"
+DOCKER_OUTFILE="${DOCKER_OUTFILE:-${DOCKER_LOGFILE}}"
+start_stop_daemon_args="--background \
+        --stderr \"${DOCKER_ERRFILE}\" --stdout \"${DOCKER_OUTFILE}\""
+
+grsecdir=/proc/sys/kernel/grsecurity
+
+depend() {
+        need sysfs cgroups
+}
+
+start_pre() {
+        export DOCKER_RAMDISK=true
+
+        checkpath -f -m 0644 -o root:docker "$DOCKER_LOGFILE"
+
+        for i in $disable_grsec; do
+                if [ -e "$grsecdir/$i" ]; then
+                        einfo " Disabling $i"
+                        echo 0 > "$grsecdir/$i"
+                fi
+        done
+        ulimit -n 1048576
+
+        # Having non-zero limits causes performance problems due to accounting overhead
+        # in the kernel. We recommend using cgroups to do container-local accounting.
+        ulimit -p unlimited
+
+        return 0
+}
