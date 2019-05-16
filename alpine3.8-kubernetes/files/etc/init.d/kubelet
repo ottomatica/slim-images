@@ -1,0 +1,23 @@
+#!/sbin/openrc-run
+# modified from https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-cluster/kubelet/files/kubelet.initd?id=2f0e00f22813902265b58ba37ad63daf0a1dc910
+
+description="Kubelet, a Kubernetes node agent"
+pidfile=${pidfile:-"/run/${RC_SVCNAME}.pid"}
+user=${user:-root}
+group=${group:-root}
+output_log="${KUBELET_OUTFILE:-/var/log/${RC_SVCNAME}.log}"
+error_log="${KUBELET_ERRFILE:-/var/log/${RC_SVCNAME}.log}"
+
+supervisor=supervise-daemon
+# wait 5 seconds between restarts
+respawn_delay=5
+respawn_period=60
+
+command="/usr/bin/kubelet"
+command_args="${KUBELET_ARGS}"
+supervise_daemon_args="--user ${user} --group ${group}"
+
+depend() {
+	need net
+	after net
+}

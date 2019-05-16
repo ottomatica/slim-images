@@ -63,8 +63,4 @@ RUN sed -i 's/root:!/root:*/' /etc/shadow
 RUN sed -i '/floppy:x:11:root/d' /etc/group
 
 # kubernetes settings
-COPY files/k8s/docker.initd /etc/init.d/docker
-COPY files/k8s/kubelet.initd /etc/init.d/kubelet
-
 COPY files/scripts/kube-init.sh /root/kube-init.sh
-COPY files/scripts/kubelet.sh /root/kubelet.sh
