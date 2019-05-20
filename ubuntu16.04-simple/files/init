@@ -1,1 +1,9 @@
+#!/bin/sh
+
+# we end up with some odd permissions from the image creation,
+# and sshd won't accept the pubkey if root doesn't own /root
+chown -R root:root /root
+
+echo "nanobox" > /etc/hostname
+
 exec /sbin/init
