@@ -1,1 +1,3 @@
 description: An alpine server for running kubernetes.
+memory: 4000
+cpus: 2
