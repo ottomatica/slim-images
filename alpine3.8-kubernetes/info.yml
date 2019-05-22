@@ -1,1 +1,2 @@
 description: An alpine server for running kubernetes.
+depends: alpine3.8-base

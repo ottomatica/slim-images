@@ -1,1 +1,2 @@
 description: An ubuntu xenial server for running kubernetes.
+depends: ubuntu16.04-base
