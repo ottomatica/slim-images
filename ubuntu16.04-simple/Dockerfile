@@ -5,6 +5,8 @@ RUN apt-get update && \
 
 FROM ubuntu:16.04 AS install
 ARG SSHPUBKEY
+# For optional packages
+ARG PKGS
 
 USER root
 RUN mkdir -p /etc/ssh /root/.ssh && chmod 0700 /root/.ssh
@@ -19,7 +21,7 @@ COPY --from=kernel /boot/vmlinuz-* /vmlinuz
 RUN apt-get update && \
     apt-get install -y ca-certificates util-linux openssh-server openssh-client \
                        rng-tools dhcpcd5 kmod
-RUN [ ! -z "$PKGS" ] && apt-get install -y $PKGS || echo 0 
+RUN [ ! -z "$PKGS" ] && apt-get install -y $PKGS || echo "No optional pkgs provided."
 RUN apt-get clean
 
 COPY files/init /init
