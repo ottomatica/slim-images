@@ -18,8 +18,9 @@ COPY --from=kernel /boot/vmlinuz-* /vmlinuz
 
 RUN apt-get update && \
     apt-get install -y ca-certificates util-linux openssh-server openssh-client \
-                       rng-tools dhcpcd5 kmod && \
-    apt-get clean
+                       rng-tools dhcpcd5 kmod
+RUN [[ -n $PKGS ]] && apt-get install -y $PKGS
+RUN apt-get clean
 
 COPY files/init /init
 
