@@ -109,10 +109,10 @@ RUN apk --no-cache add ${APKGS} && \
     Rscript -e 'install.packages(commandArgs(TRUE))' ${RPKGS}
 
 # Remove build dependencies
-RUN apk del --purge --rdepends build-deps make-deps && \
+RUN apk del --purge --rdepends build-deps && \
     rm -f /usr/lib/R/bin/R && \
     ln -s /usr/bin/R /usr/lib/R/bin/R && \
-# Clean up
+    # Clean up
     rm -rf /usr/lib/R/library/translations && \
     rm -rf /tmp/*
 
