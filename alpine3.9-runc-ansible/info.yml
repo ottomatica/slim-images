@@ -1,0 +1,5 @@
+description: A simple configuration server with ansible and runc (for running containers).
+base_repository: https://github.com/ottomatica/slim
+base_directory: images/alpine3.9-simple
+base_args:
+  PKGS: runc ansible
