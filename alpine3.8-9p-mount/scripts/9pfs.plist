@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.slim.u9fs</string>
+	<key>Program</key>
+	<string>/Users/cjparnin/projects/slim-images/alpine3.8-9p-mount/scripts/u9fs</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/cjparnin/projects/slim-images/alpine3.8-9p-mount/scripts/u9fs</string>
+		<string>-l</string>
+		<string>/tmp/u9fs.log</string>
+		<string>-a</string>
+		<string>none</string>
+		<string>-u</string>
+		<string>cjparnin</string>
+		<string>-D</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<dict>
+			<key>SockPathMode</key>
+			<integer>438</integer>
+			<key>SockPathName</key>
+			<string>/Users/cjparnin/.slim/sockets/slimshare.socket</string>
+		</dict>
+	</dict>
+	<key>inetdCompatibility</key>
+	<dict>
+		<key>Wait</key>
+		<false/>
+	</dict>
+</dict>
+</plist>
