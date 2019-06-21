@@ -1,6 +1,6 @@
 FROM ubuntu:16.04 AS kernel
 RUN apt-get update && \
-    apt-get install -y linux-virtual && \
+    apt-get install -y linux-virtual virtualbox-guest-dkms && \
     apt-get clean
 
 FROM ubuntu:16.04 AS install
@@ -20,7 +20,7 @@ COPY --from=kernel /boot/vmlinuz-* /vmlinuz
 
 RUN apt-get update && \
     apt-get install -y ca-certificates util-linux openssh-server openssh-client \
-                       rng-tools dhcpcd5 kmod
+                       rng-tools dhcpcd5 kmod virtualbox-guest-utils
 RUN [ ! -z "$PKGS" ] && apt-get install -y $PKGS || echo "No optional pkgs provided."
 RUN apt-get clean
 
