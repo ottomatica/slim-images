@@ -1,3 +1,5 @@
 description: An ubuntu xenial server for running kubernetes.
 memory: 6000
 cpus: 2
+base_args:
+  PKGS: tmux
